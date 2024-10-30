@@ -8,7 +8,7 @@ This repository contains a **simple user interface** built with **Tkinter** that
 - **User-Friendly Interface**: Built with Tkinter for a straightforward, easy-to-navigate experience.
 
 ## Requirements
-- Python 3.x
+- Python 3.11
 - Tkinter (usually included with Python)
 
 ## How to Run
