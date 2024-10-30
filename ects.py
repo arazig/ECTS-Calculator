@@ -1,12 +1,16 @@
+####################################################################################
+#####             ECTS calculator                                               ####
+#####    for the courses selection in the dual degree ENSAE - M2DS              ####
+####################################################################################
+
 import tkinter as tk
 from tkinter import messagebox
 
-# Initialisation des crédits accumulés
 ects_master_ds = 0
 ects_ensae_s1 = 0
 ects_ensae_s2 = 0
 
-# Application principale
+
 def ajouter_matiere():
     global ects_master_ds, ects_ensae_s1, ects_ensae_s2
     
@@ -21,7 +25,6 @@ def ajouter_matiere():
         messagebox.showwarning("Erreur", "Veuillez entrer le nom de la matière.")
         return
 
-    # Ajout des crédits à la formation choisie
     if formation_choisie == "Master DS":
         ects_master_ds += ects
         liste_master_ds.insert(tk.END, f"{nom_matiere}: {ects} ECTS")
@@ -45,23 +48,20 @@ def ajouter_matiere():
             ects_master_ds += transfert_ects
             liste_master_ds.insert(tk.END, f"Transfert de {nom_matiere}: {transfert_ects} ECTS")
 
-    # Mise à jour des crédits affichés
+    # Maj crédits affichés
     lbl_ects_master.config(text=f"ECTS Master DS: {ects_master_ds}")
     lbl_ects_ensae_s1.config(text=f"ECTS ENSAE S1: {ects_ensae_s1}")
     lbl_ects_ensae_s2.config(text=f"ECTS ENSAE S2: {ects_ensae_s2}")
 
-    # Vérification des règles de validation
     verifier_validation()
 
 def supprimer_matiere():
     global ects_master_ds, ects_ensae_s1, ects_ensae_s2
 
-    # Récupération de la sélection dans chaque liste
     selection_master = liste_master_ds.curselection()
     selection_ensae_s1 = liste_ensae_s1.curselection()
     selection_ensae_s2 = liste_ensae_s2.curselection()
 
-    # Suppression de la matière dans la liste Master DS
     if selection_master:
         item = liste_master_ds.get(selection_master)
         ects = int(item.split(": ")[1].split()[0])
@@ -69,7 +69,6 @@ def supprimer_matiere():
         liste_master_ds.delete(selection_master)
         lbl_ects_master.config(text=f"ECTS Master DS: {ects_master_ds}")
     
-    # Suppression de la matière dans la liste ENSAE S1
     elif selection_ensae_s1:
         item = liste_ensae_s1.get(selection_ensae_s1)
         ects = int(item.split(": ")[1].split()[0])
@@ -77,7 +76,6 @@ def supprimer_matiere():
         liste_ensae_s1.delete(selection_ensae_s1)
         lbl_ects_ensae_s1.config(text=f"ECTS ENSAE S1: {ects_ensae_s1}")
     
-    # Suppression de la matière dans la liste ENSAE S2
     elif selection_ensae_s2:
         item = liste_ensae_s2.get(selection_ensae_s2)
         ects = int(item.split(": ")[1].split()[0])
@@ -85,7 +83,7 @@ def supprimer_matiere():
         liste_ensae_s2.delete(selection_ensae_s2)
         lbl_ects_ensae_s2.config(text=f"ECTS ENSAE S2: {ects_ensae_s2}")
     
-    # Mise à jour de la validation
+
     verifier_validation()
 
 def verifier_validation():
@@ -94,11 +92,11 @@ def verifier_validation():
     else:
         lbl_validation.config(text="Validation Master DS: OK")
 
-# Création de la fenêtre principale
-root = tk.Tk()
+
+root = tk.Tk()# fenêtre principale
 root.title("Calcul des ECTS")
 
-# Variables de l'interface
+# Variables
 nom_matiere_var = tk.StringVar(root)
 ects_var = tk.StringVar(root)
 formation_var = tk.StringVar(root)
@@ -113,7 +111,7 @@ transfert_var.set("0")
 transfert_var_formation = tk.StringVar(root)
 transfert_var_formation.set("Aucun")
 
-# Interface utilisateur
+# UI
 frame = tk.Frame(root)
 frame.pack(pady=10)
 
@@ -136,14 +134,14 @@ lbl_formation.pack()
 menu_formation = tk.OptionMenu(frame, formation_var, "Master DS", "ENSAE")
 menu_formation.pack()
 
-# Option pour choisir le semestre si ENSAE est choisi
+# choix du semestre si ENSAE est choisi
 lbl_semestre = tk.Label(frame, text="Semestre (si ENSAE):")
 lbl_semestre.pack()
 
 menu_semestre = tk.OptionMenu(frame, semestre_var, "S1", "S2")
 menu_semestre.pack()
 
-# Option pour transférer les crédits à une autre formation
+
 lbl_transfert = tk.Label(frame, text="Transférer des crédits:")
 lbl_transfert.pack()
 
@@ -156,15 +154,15 @@ lbl_transfert_formation.pack()
 menu_transfert_formation = tk.OptionMenu(frame, transfert_var_formation, "Aucun", "Master DS", "ENSAE S1", "ENSAE S2")
 menu_transfert_formation.pack()
 
-# Bouton pour ajouter la matière
+# ajout de la matière
 btn_ajouter_matiere = tk.Button(frame, text="Ajouter Matière", command=ajouter_matiere)
 btn_ajouter_matiere.pack(pady=5)
 
-# Bouton pour supprimer une matière sélectionnée
+# supprime une matière sélectionnée
 btn_supprimer_matiere = tk.Button(frame, text="Supprimer Matière", command=supprimer_matiere)
 btn_supprimer_matiere.pack(pady=5)
 
-# Affichage des cours séparés par formation et semestre
+# cours séparés par formation et semestre
 lbl_ects_master = tk.Label(frame, text=f"ECTS Master DS: {ects_master_ds}")
 lbl_ects_master.pack()
 
@@ -187,5 +185,7 @@ liste_ensae_s2.pack(pady=5)
 lbl_validation = tk.Label(frame, text="Validation Master DS: INSUFFISANTE")
 lbl_validation.pack(pady=10)
 
-# Lancer la boucle principale de Tkinter
+
+
+# RUN
 root.mainloop()
