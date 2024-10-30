@@ -16,3 +16,5 @@ This repository contains a **simple user interface** built with **Tkinter** that
 2. Run the main script:
    ```bash
    python main.py
+   
+<img src="demo_ects.png" alt="ensae" width="650" /> 
